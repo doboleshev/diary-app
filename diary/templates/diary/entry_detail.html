@@ -1,0 +1,36 @@
+{% extends 'diary/base.html' %}
+
+{% block title %}{{ entry.title }} - Личный дневник{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">{{ entry.title }}</h2>
+        <div>
+            <a href="{% url 'diary:entry_edit' entry.pk %}" class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-pencil"></i> Редактировать
+            </a>
+            <a href="{% url 'diary:entry_delete' entry.pk %}" class="btn btn-sm btn-outline-danger">
+                <i class="bi bi-trash"></i> Удалить
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="text-muted mb-3">
+            <i class="bi bi-calendar"></i> Создано: {{ entry.created_at|date:"d.m.Y H:i" }}
+            {% if entry.updated_at != entry.created_at %}
+                <br><i class="bi bi-pencil-square"></i> Обновлено: {{ entry.updated_at|date:"d.m.Y H:i" }}
+            {% endif %}
+        </div>
+        <div class="entry-content" style="white-space: pre-wrap; line-height: 1.8;">
+            {{ entry.content }}
+        </div>
+    </div>
+    <div class="card-footer">
+        <a href="{% url 'diary:entry_list' %}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Назад к списку
+        </a>
+    </div>
+</div>
+{% endblock %}
+
